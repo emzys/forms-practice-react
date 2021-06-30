@@ -24,27 +24,23 @@ class App extends Component {
             age: "",
             gender: "",
             location: "",
-            dietaryRestrictions: {
-                isVegan: false,
-                isKosher: false,
-                isLactoseFree: false
-            }
+            isVegan: false,
+            isKosher: false,
+            isLactoseFree: false
         }
         this.handleChange = this.handleChange.bind(this)
     }
 
     handleChange(event) {
-        const { name, value, type, checked } = event.target
+        const {name, value, type, checked} = event.target
         type === "checkbox" ?
-            this.setState(prevState => {
-                    return
-                        dietaryRestrictions: {
-                            prevState.dietaryRestrictions,
-                            [name]: checked
-                        }
-                })
+            this.setState({
+                [name]: checked
+            })
         :
-        this.setState({[name]: value})
+        this.setState({
+            [name]: value
+        })
     }
 
     render() {
@@ -117,7 +113,7 @@ class App extends Component {
                             type="checkbox"
                             name="isVegan"
                             onChange={this.handleChange}
-                            checked={this.state.dietaryRestrictions.isVegan}
+                            checked={this.state.isVegan}
                         /> Vegan?
                     </label>
                     <br />
@@ -126,7 +122,7 @@ class App extends Component {
                             type="checkbox"
                             name="isKosher"
                             onChange={this.handleChange}
-                            checked={this.state.dietaryRestrictions.isKosher}
+                            checked={this.state.isKosher}
                         /> Kosher?
                     </label>
                     <br />
@@ -135,7 +131,7 @@ class App extends Component {
                             type="checkbox"
                             name="isLactoseFree"
                             onChange={this.handleChange}
-                            checked={this.state.dietaryRestrictions.isLactoseFree}
+                            checked={this.state.isLactoseFree}
                         /> Lactose intolerant?
                     </label>
                     <br />
@@ -150,10 +146,9 @@ class App extends Component {
                 <p>Your destination: {this.state.location}</p>
                 <p>
                     Your dietary restrictions:
-                    {this.state.dietaryRestrictions.isVegan && "Vegan"}
-                    {this.state.dietaryRestrictions.isKosher && "Kosher"}
-                    {this.state.dietaryRestrictions.isLactoseFree && "Lactose intolerant"}
-                    {/* Dietary restrictions here, comma separated */}
+                    Vegan: {this.state.isVegan ? "Yes" : "No"},
+                    Kosher: {this.state.isKosher ? "Yes" : "No"},
+                    Lactose Free: {this.state.isLactoseFree ? "Yes" : "No"}
                 </p>
             </main>
         )
