@@ -1,25 +1,163 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from "react"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+/**
+ * Challenge: Wire up the partially-finished travel form so that it works!
+ * Remember to use the concept of controlled forms
+ * https://reactjs.org/docs/forms.html
+ *
+ * All information should be populating the text below the form in real-time
+ * as you're filling it out
+ *
+ * This exercise is adapted from the V School curriculum on vanilla JS forms:
+ * https://coursework.vschool.io/travel-form/
+ *
+ * All of our challenges and learning resources are open for the public
+ * to play around with and learn from at https://coursework.vschool.io
+ */
+
+class App extends Component {
+    constructor() {
+        super()
+        this.state = {
+            firstName: "",
+            lastName: "",
+            age: "",
+            gender: "",
+            location: "",
+            dietaryRestrictions: {
+                isVegan: false,
+                isKosher: false,
+                isLactoseFree: false
+            }
+        }
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+    handleChange(event) {
+        const { name, value, type, checked } = event.target
+        type === "checkbox" ?
+            this.setState(prevState => {
+                    return
+                        dietaryRestrictions: {
+                            prevState.dietaryRestrictions,
+                            [name]: checked
+                        }
+                })
+        :
+        this.setState({[name]: value})
+    }
+
+    render() {
+        return (
+            <main>
+                <form>
+                    <input
+                        type="text"
+                        name="firstName"
+                        value={this.state.firstName}
+                        placeholder="First Name"
+                        onChange={this.handleChange}
+                    /><br />
+                    <input
+                        type="text"
+                        name="lastName"
+                        value={this.state.lastName}
+                        placeholder="Last Name"
+                        onChange={this.handleChange}
+                    /><br />
+                    <input
+                        type="text"
+                        name="age"
+                        value={this.state.age}
+                        placeholder="Age"
+                        onChange={this.handleChange}
+                    /><br />
+
+                    {/* Create radio buttons for gender here */}
+                    <label>
+                        <input
+                            type="radio"
+                            name="gender"
+                            value="male"
+                            checked={this.state.gender === "male"}
+                            onChange={this.handleChange}
+                        /> Male
+                    </label>
+                    <br />
+                    <label>
+                        <input
+                            type="radio"
+                            name="gender"
+                            value="female"
+                            checked={this.state.gender === "female"}
+                            onChange={this.handleChange}
+                        /> Female
+                    </label>
+                    <br />
+
+                    {/* Create select box for location here */}
+                    <label> Location:
+                        <br />
+                        <select
+                            value={this.state.location}
+                            name="location"
+                            onChange={this.handleChange}
+                        >
+                            <option value="">-- Please choose a location --</option>
+                            <option value="tokyo">Tokyo</option>
+                            <option value="yokohama">Yokohama</option>
+                            <option value="nagoya">Nagoya</option>
+                        </select>
+                    </label>
+                    <br />
+
+                    {/* Create check boxes for dietary restrictions here */}
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="isVegan"
+                            onChange={this.handleChange}
+                            checked={this.state.dietaryRestrictions.isVegan}
+                        /> Vegan?
+                    </label>
+                    <br />
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="isKosher"
+                            onChange={this.handleChange}
+                            checked={this.state.dietaryRestrictions.isKosher}
+                        /> Kosher?
+                    </label>
+                    <br />
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="isLactoseFree"
+                            onChange={this.handleChange}
+                            checked={this.state.dietaryRestrictions.isLactoseFree}
+                        /> Lactose intolerant?
+                    </label>
+                    <br />
+
+                    <button>Submit</button>
+                </form>
+                <hr />
+                <h2>Entered information:</h2>
+                <p>Your name: {`${this.state.firstName} ${this.state.lastName}`}</p>
+                <p>Your age: {this.state.age}</p>
+                <p>Your gender: {this.state.gender}</p>
+                <p>Your destination: {this.state.location}</p>
+                <p>
+                    Your dietary restrictions:
+                    {this.state.dietaryRestrictions.isVegan && "Vegan"}
+                    {this.state.dietaryRestrictions.isKosher && "Kosher"}
+                    {this.state.dietaryRestrictions.isLactoseFree && "Lactose intolerant"}
+                    {/* Dietary restrictions here, comma separated */}
+                </p>
+            </main>
+        )
+    }
 }
 
-export default App;
+export default App
